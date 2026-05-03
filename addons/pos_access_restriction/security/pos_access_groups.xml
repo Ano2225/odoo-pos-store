@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+            We reuse the built-in POS groups:
+              - point_of_sale.group_pos_user    → cashier (restricted)
+              - point_of_sale.group_pos_manager → manager (sees all)
+
+            No custom groups needed; we add access rules on top of the
+            existing hierarchy.
+        -->
+    </data>
+</odoo>

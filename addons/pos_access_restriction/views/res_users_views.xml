@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--
+            Hérite du formulaire UTILISATEUR (base.view_users_form).
+            Cette vue existe dans TOUTES les versions d'Odoo — aucun risque.
+            On ajoute un onglet "Caisses autorisées" après l'onglet "Droits d'accès".
+
+            Configuration : Admin/Manager va dans
+            Paramètres → Utilisateurs → ouvre un caissier → onglet "Caisses autorisées"
+            et sélectionne les caisses qu'il peut utiliser.
+        -->
+        <record id="view_users_form_pos_restriction" model="ir.ui.view">
+            <field name="name">res.users.form.pos.restriction</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='access_rights']" position="after">
+                    <page string="Caisses POS autorisées" name="pos_restriction">
+                        <group>
+                            <field
+                                name="allowed_pos"
+                                widget="many2many_tags"
+                                string="Caisses accessibles"
+                                placeholder="Laisser vide = accès à toutes les caisses"
+                                options="{'no_create': True}"
+                                help="Sélectionnez les caisses que cet utilisateur peut voir et ouvrir. Laisser vide = toutes les caisses sont accessibles (comportement par défaut)."
+                            />
+                        </group>
+                        <div class="alert alert-warning" role="alert"
+                             invisible="allowed_pos">
+                            <strong>Attention :</strong>
+                            Aucune caisse sélectionnée = cet utilisateur voit
+                            <strong>toutes</strong> les caisses.
+                            Sélectionnez au moins une caisse pour activer la restriction.
+                        </div>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

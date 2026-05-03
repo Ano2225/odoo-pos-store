@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--
+            Héritage du formulaire officiel pos.config (Odoo 18).
+            Xmlid confirmé : point_of_sale.pos_config_view_form
+
+            La vue pos.config d'Odoo 18 n'utilise PAS de <notebook>.
+            Elle utilise des blocs <div class="row mt16 o_settings_container">.
+            On insère notre section après le dernier de ces blocs.
+        -->
+        <record id="view_pos_config_form_pos_restriction" model="ir.ui.view">
+            <field name="name">pos.config.form.pos.restriction</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='row mt16 o_settings_container'][last()]" position="after">
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Caissiers autorisés</span>
+                                <div class="text-muted">
+                                    Laisser vide = tous les utilisateurs POS ont accès.
+                                    Les managers voient toujours toutes les caisses.
+                                </div>
+                                <div class="content-group mt8">
+                                    <field
+                                        name="allowed_user_ids"
+                                        widget="many2many_tags"
+                                        string=""
+                                        nolabel="1"
+                                        placeholder="Laisser vide = tous autorisés"
+                                        options="{'no_create': True}"
+                                    />
+                                </div>
+                                <div class="alert alert-info mt8" role="alert"
+                                     invisible="allowed_user_ids">
+                                    <strong>Aucune restriction active.</strong>
+                                    Tous les utilisateurs POS peuvent accéder à cette caisse.
+                                </div>
+                                <div class="alert alert-warning mt8" role="alert"
+                                     invisible="not allowed_user_ids">
+                                    <strong>Restriction active :</strong>
+                                    Seuls les caissiers listés peuvent voir et ouvrir cette caisse.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ── Vue liste autonome (utilisée par le menu "Restrictions d'accès") ── -->
+        <record id="view_pos_access_restriction_list" model="ir.ui.view">
+            <field name="name">pos.config.restriction.list</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <list string="Restrictions d'accès aux caisses" editable="top">
+                    <field name="name" string="Caisse" readonly="1"/>
+                    <field name="allowed_user_ids"
+                           widget="many2many_tags"
+                           string="Caissiers autorisés"
+                           placeholder="Laisser vide = tous autorisés"
+                           options="{'no_create': True}"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ── Vue formulaire légère (utilisée par le menu "Restrictions d'accès") ── -->
+        <record id="view_pos_access_restriction_form" model="ir.ui.view">
+            <field name="name">pos.config.restriction.form</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <form string="Restriction d'accès">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group string="Caissiers autorisés à cette caisse">
+                            <field name="allowed_user_ids"
+                                   widget="many2many_tags"
+                                   string=""
+                                   nolabel="1"
+                                   placeholder="Laisser vide = tous les utilisateurs POS ont accès"
+                                   options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <div class="alert alert-info" role="alert">
+                                <strong>Info :</strong>
+                                Si ce champ est vide, tous les utilisateurs POS ont accès.
+                                Les <strong>managers</strong> ont toujours accès à toutes les caisses.
+                            </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ── Action window pour le menu "Restrictions d'accès" ── -->
+        <record id="action_pos_access_restriction" model="ir.actions.act_window">
+            <field name="name">Restrictions d'accès aux caisses</field>
+            <field name="res_model">pos.config</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_pos_access_restriction_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_pos_access_restriction_form')}),
+            ]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Aucune caisse configurée</p>
+                <p>Créez d'abord une caisse dans Point de Vente, puis revenez ici.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
