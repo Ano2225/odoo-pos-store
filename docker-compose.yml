@@ -10,7 +10,7 @@ services:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
     volumes:
-      - odoo_postgres_data:/var/lib/postgresql/data   # Nom changé ici
+      - odoo_postgres_data:/var/lib/postgresql/data 
 
   odoo:
     image: odoo:18
