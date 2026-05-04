@@ -29,7 +29,9 @@ services:
     volumes:
       - ./config:/etc/odoo
       - ./addons:/mnt/extra-addons
-      - ./data:/var/lib/odoo
+      - odoo_data:/var/lib/odoo
+
 
 volumes:
-  odoo_postgres_data:  
+  odoo_postgres_data:
+  odoo_data:  
