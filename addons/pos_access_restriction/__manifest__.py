@@ -10,8 +10,11 @@
         - Menus Reporting/Commandes/Produits/Configuration cachés aux caissiers
         Configuration : Paramètres → Utilisateurs → onglet "Caisses POS autorisées"
     """,
-    'author': 'Custom — basé sur l\'approche Cybrosys Technologies',
-    'depends': ['point_of_sale'],
+    'author': 'Arouna Ouattara',
+    'depends': [
+        'point_of_sale',
+        'pos_hr',
+    ],
     'data': [
         'security/pos_access_groups.xml',
         'security/ir.model.access.csv',
@@ -20,6 +23,13 @@
         'views/pos_config_views.xml',
         'views/pos_menus.xml',
     ],
+    'assets': {
+        'point_of_sale._assets_pos': [
+            'pos_access_restriction/static/src/css/hide_backend.css',
+            'pos_access_restriction/static/src/js/block_cashier_navbar.js',
+            'pos_access_restriction/static/src/xml/pos_hr_override.xml',
+    ]
+    },
     'post_init_hook': 'post_init_hook',
     'uninstall_hook': 'uninstall_hook',
     'installable': True,

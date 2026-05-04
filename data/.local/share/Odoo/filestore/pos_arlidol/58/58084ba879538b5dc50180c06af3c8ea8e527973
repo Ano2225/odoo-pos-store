@@ -16729,6 +16729,9 @@ this.dialog.add(AlertDialog,{title:_t("Access Denied"),body:_t("You are not allo
 /* /pos_hr/static/src/overrides/screens/product_screen/product_info_popup/product_info_popup.js */
 odoo.define('@pos_hr/overrides/screens/product_screen/product_info_popup/product_info_popup',['@point_of_sale/app/screens/product_screen/product_info_popup/product_info_popup','@web/core/utils/patch'],function(require){'use strict';let __exports={};const{ProductInfoPopup}=require("@point_of_sale/app/screens/product_screen/product_info_popup/product_info_popup");const{patch}=require("@web/core/utils/patch");patch(ProductInfoPopup.prototype,{get allowProductEdition(){return!this.pos.config.module_pos_hr||this.pos.employeeIsAdmin;},});return __exports;});;
 
+/* /pos_access_restriction/static/src/js/block_cashier_switch.js */
+odoo.define('@pos_access_restriction/js/block_cashier_switch',['@web/core/utils/patch','@point_of_sale/app/screens/login_screen/login_screen'],function(require){'use strict';let __exports={};const{patch}=require("@web/core/utils/patch");const{LoginScreen}=require("@point_of_sale/app/screens/login_screen/login_screen");patch(LoginScreen.prototype,{async selectCashier(){return;},});return __exports;});;
+
 /* /pos_sms/static/src/overrides/partner_list.js */
 odoo.define('@pos_sms/overrides/partner_list',['@web/core/utils/patch','@point_of_sale/app/screens/partner_list/partner_list'],function(require){'use strict';let __exports={};const{patch}=require("@web/core/utils/patch");const{PartnerList}=require("@point_of_sale/app/screens/partner_list/partner_list");patch(PartnerList.prototype,{getPhoneSearchTerms(){return["phone_mobile_search"];},});return __exports;});;
 
@@ -25676,6 +25679,15 @@ registerTemplateExtension("point_of_sale.LoginScreen", `/pos_hr/static/src/overr
             <span t-else="" class="d-flex flex-grow-1 align-items-center">Unlock Register</span>
         </xpath>
     </t>
+`);
+registerTemplateExtension("point_of_sale.LoginScreen", `/pos_access_restriction/static/src/xml/pos_hr_override.xml`, `<t t-name="point_of_sale.LoginScreen" t-inherit="point_of_sale.LoginScreen" t-inherit-mode="extension" xml:space="preserve">
+
+        <xpath expr="//button[contains(@class, 'select-cashier')]" position="attributes">
+            <attribute name="t-if">false</attribute>
+        </xpath>
+
+    </t>
+
 `);
 registerTemplateExtension("point_of_sale.ReceiptScreen", `/pos_hr/static/src/overrides/screens/receipt_screen/receipt_screen.xml`, `<t t-name="ReceiptScreen" t-inherit="point_of_sale.ReceiptScreen" t-inherit-mode="extension" xml:space="preserve">
         <xpath expr="//span[hasclass('edit-order-payment')]" position="attributes">
