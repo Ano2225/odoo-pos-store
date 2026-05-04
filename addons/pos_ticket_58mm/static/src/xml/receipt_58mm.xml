@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <!--
+        Aucun héritage XML : le masquage de "Powered by Odoo" et des
+        lignes de paiement est entièrement géré par le CSS
+        (static/src/css/receipt_58mm.css). Cela évite les erreurs
+        d'xpath quand la structure du template OrderReceipt change
+        entre versions / configurations d'Odoo 18.
+    -->
+</templates>

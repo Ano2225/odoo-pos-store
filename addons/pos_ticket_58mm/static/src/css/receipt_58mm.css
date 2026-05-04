@@ -1,0 +1,132 @@
+/* ============================================================
+   POS Ticket 58mm - Styles pour imprimante thermique étroite
+   ============================================================ */
+
+/* Forcer la largeur du ticket à ~215px (58mm) */
+.pos-receipt,
+.receipt-screen .pos-receipt-container .pos-receipt,
+.pos-receipt-print .pos-receipt {
+    width: 215px !important;
+    max-width: 215px !important;
+    min-width: 215px !important;
+    margin: 0 auto !important;
+    padding: 4px !important;
+    box-sizing: border-box !important;
+    font-family: 'Inconsolata', 'Courier New', monospace !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    color: #000 !important;
+}
+
+/* En-tête / pied : un peu plus compact */
+.pos-receipt .pos-receipt-center-align,
+.pos-receipt .pos-receipt-contact {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    word-wrap: break-word !important;
+}
+
+/* Titres */
+.pos-receipt h1,
+.pos-receipt h2,
+.pos-receipt h3 {
+    font-size: 13px !important;
+    margin: 2px 0 !important;
+    font-weight: bold !important;
+}
+
+/* Lignes de produits */
+.pos-receipt .orderline,
+.pos-receipt .receipt-orderline,
+.pos-receipt .product-name,
+.pos-receipt .pos-receipt-right-align,
+.pos-receipt .pos-receipt-left-align {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+}
+
+/* Tableaux internes (ex: lignes / totaux) */
+.pos-receipt table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+}
+.pos-receipt table td {
+    padding: 1px 0 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Total bien visible */
+.pos-receipt .pos-receipt-amount,
+.pos-receipt .receipt-total {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+/* Logo : ne pas dépasser la largeur du ticket */
+.pos-receipt img,
+.pos-receipt .pos-receipt-logo {
+    max-width: 200px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* ---------- Masquages demandés ---------- */
+
+/* Cacher « Généré par Odoo » (Powered by Odoo) */
+.pos-receipt .powered-by,
+.pos-receipt .pos-receipt-powered-by,
+.pos-receipt a[href*="odoo.com"],
+.pos-receipt-container .powered-by {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+/* Cacher les lignes de paiement (Wave, Carte, Mobile Money, etc.) */
+.pos-receipt .paymentlines,
+.pos-receipt .pos-receipt-paymentlines,
+.pos-receipt .receipt-paymentlines,
+.pos-receipt .payment-lines,
+.pos-receipt .paymentline {
+    display: none !important;
+}
+
+/* ---------- Règles spécifiques à l'impression ---------- */
+@media print {
+    @page {
+        size: 58mm auto;
+        margin: 0;
+    }
+    html, body {
+        width: 58mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+    .pos-receipt {
+        width: 58mm !important;
+        max-width: 58mm !important;
+        font-size: 12px !important;
+        margin: 0 !important;
+        padding: 2mm !important;
+    }
+}
+
+/* Cacher uniquement le "Généré par Odoo" sans masquer le n° et la date */
+.pos-receipt .pos-receipt-order-data > p:first-child {
+    display: none !important;
+}
+
+/* Conteneur d'aperçu du ticket dans le POS : forcer largeur étroite */
+.d-inline-block.border.rounded.bg-view.overflow-y-auto {
+    width: 300px !important;
+    max-width: 300px !important;
+    min-width: 300px !important;
+    padding: 4px !important;
+    margin: 4px auto !important;
+    box-sizing: border-box !important;
+}
